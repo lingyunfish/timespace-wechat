@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "记忆点",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 100
+}

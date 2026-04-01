@@ -1,0 +1,81 @@
+<view class="publish-page">
+  <!-- 图片选择区域 -->
+  <view class="section">
+    <view class="section-title">选择照片</view>
+    <view class="photo-picker">
+      <view class="picked-list">
+        <view
+          class="picked-item"
+          wx:for="{{images}}"
+          wx:key="index"
+        >
+          <image src="{{item}}" mode="aspectFill" class="picked-photo" />
+          <view class="picked-remove" bindtap="removeImage" data-index="{{index}}">×</view>
+        </view>
+        <view
+          class="picker-add"
+          bindtap="chooseImage"
+          wx:if="{{images.length < 9}}"
+        >
+          <text class="picker-add-icon">+</text>
+          <text class="picker-add-text">{{images.length > 0 ? '继续添加' : '拍照/相册'}}</text>
+        </view>
+      </view>
+      <text class="photo-tip">最多可选择9张照片（{{images.length}}/9）</text>
+    </view>
+  </view>
+
+  <!-- 文字描述 -->
+  <view class="section">
+    <view class="section-title">记忆描述</view>
+    <textarea
+      class="desc-input"
+      placeholder="记录这一刻的心情或故事..."
+      maxlength="500"
+      value="{{description}}"
+      bindinput="onDescInput"
+      auto-height
+    />
+    <text class="desc-count">{{description.length}}/500</text>
+  </view>
+
+  <!-- 地理位置确认 -->
+  <view class="section location-section">
+    <view class="section-title">投递位置</view>
+    <view class="location-card">
+      <view class="location-info">
+        <view class="location-lock">
+          <text class="lock-icon-small">🔒</text>
+          <text class="location-status">位置已锁定</text>
+        </view>
+        <text class="location-name">{{placeName || '当前位置'}}</text>
+        <text class="location-coords">{{locationText}}</text>
+      </view>
+      <view class="location-map">
+        <map
+          class="mini-map"
+          latitude="{{latitude}}"
+          longitude="{{longitude}}"
+          scale="17"
+          show-location
+          markers="{{[{latitude: latitude, longitude: longitude, width: 24, height: 24, iconPath: '/images/tab-explore-active.png'}]}}"
+        />
+      </view>
+    </view>
+    <view class="location-warning" wx:if="{{!isValidLocation}}">
+      <text class="warning-icon">⚠️</text>
+      <text>你不在投递范围内，请移动到记忆点50米范围内</text>
+    </view>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="publish-footer">
+    <button
+      class="publish-submit-btn {{canPublish ? '' : 'disabled'}}"
+      bindtap="doPublish"
+      disabled="{{!canPublish || submitting}}"
+    >
+      {{submitting ? '投递中...' : '投递到此位置'}}
+    </button>
+  </view>
+</view>

@@ -1,0 +1,91 @@
+<view class="photo-page">
+  <!-- 大图展示 -->
+  <swiper
+    class="photo-swiper"
+    current="{{currentIndex}}"
+    bindchange="onSwiperChange"
+    circular
+  >
+    <swiper-item wx:for="{{photoList}}" wx:key="id">
+      <image
+        src="{{item.image_url}}"
+        mode="aspectFit"
+        class="photo-full"
+        bindtap="previewImage"
+        data-url="{{item.image_url}}"
+      />
+    </swiper-item>
+  </swiper>
+
+  <!-- 照片信息 -->
+  <view class="photo-info">
+    <view class="photo-user-row">
+      <image class="photo-avatar" src="{{currentPhoto.user_avatar || '/images/tab-profile.png'}}" />
+      <view class="photo-user-info">
+        <text class="photo-username">{{currentPhoto.user_name || '匿名'}}</text>
+        <text class="photo-time">{{currentPhoto.time_text}}</text>
+      </view>
+      <view class="photo-actions">
+        <view class="action-btn {{currentPhoto.is_liked ? 'liked' : ''}}" bindtap="toggleLike">
+          <text class="action-icon">{{currentPhoto.is_liked ? '♥' : '♡'}}</text>
+          <text class="action-count">{{currentPhoto.like_count || 0}}</text>
+        </view>
+      </view>
+    </view>
+
+    <text class="photo-desc" wx:if="{{currentPhoto.description}}">{{currentPhoto.description}}</text>
+
+    <view class="photo-location-tag">
+      <text class="loc-tag-icon">📍</text>
+      <text class="loc-tag-name">{{currentPhoto.place_name || '未知地点'}}</text>
+    </view>
+
+    <view class="swiper-indicator">
+      <text>{{currentIndex + 1}} / {{photoList.length}}</text>
+    </view>
+  </view>
+
+  <!-- 评论区 -->
+  <view class="comment-section">
+    <view class="comment-header">
+      <text class="comment-title">评论 ({{comments.length}})</text>
+    </view>
+
+    <view class="geo-restrict-tip" wx:if="{{!isNearby}}">
+      <text class="geo-icon">📍</text>
+      <text>评论仅限在记忆点附近查看和参与</text>
+    </view>
+
+    <view class="comment-list" wx:if="{{isNearby}}">
+      <view class="comment-item" wx:for="{{comments}}" wx:key="id">
+        <image class="comment-avatar" src="{{item.user_avatar || '/images/tab-profile.png'}}" />
+        <view class="comment-body">
+          <text class="comment-name">{{item.user_name}}</text>
+          <text class="comment-content">{{item.content}}</text>
+          <text class="comment-time">{{item.time_text}}</text>
+        </view>
+      </view>
+      <view class="empty-state" wx:if="{{comments.length === 0}}">
+        <text class="empty-text">暂无评论，来说点什么吧</text>
+      </view>
+    </view>
+
+    <view class="comment-locked" wx:else>
+      <text class="locked-icon">🔒</text>
+      <text class="locked-text">到达此记忆点附近解锁评论</text>
+    </view>
+  </view>
+
+  <!-- 评论输入框 -->
+  <view class="comment-input-bar" wx:if="{{isNearby}}">
+    <input
+      class="comment-input"
+      placeholder="说点什么..."
+      value="{{commentText}}"
+      bindinput="onCommentInput"
+      confirm-type="send"
+      bindconfirm="sendComment"
+    />
+    <view class="comment-send-btn" bindtap="sendComment">发送</view>
+  </view>
+</view>

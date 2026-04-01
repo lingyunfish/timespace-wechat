@@ -1,0 +1,116 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar" style="top: {{statusBarHeight + 8}}px;">
+    <view class="search-box" bindtap="onSearchTap">
+      <image class="search-icon" src="/images/tab-explore.png" mode="aspectFit" />
+      <text class="search-placeholder">搜索城市或景点...</text>
+    </view>
+  </view>
+
+  <!-- 地图 -->
+  <map
+    id="mainMap"
+    class="main-map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="{{scale}}"
+    markers="{{markers}}"
+    show-location
+    enable-zoom
+    enable-scroll
+    enable-rotate
+    bindmarkertap="onMarkerTap"
+    bindregionchange="onRegionChange"
+  />
+
+  <!-- 定位按钮 -->
+  <view class="locate-btn" bindtap="moveToLocation" hover-class="locate-btn-hover">
+    <view class="locate-icon">◎</view>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn-wrap">
+    <view class="publish-btn" bindtap="onPublish" hover-class="publish-btn-hover">
+      <text class="publish-icon">+</text>
+    </view>
+    <text class="publish-label">投递记忆</text>
+  </view>
+
+  <!-- 附近记忆点数量提示 -->
+  <view class="nearby-tip" wx:if="{{nearbyCount > 0}}" bindtap="showNearbyList">
+    <text class="nearby-dot">●</text>
+    <text>附近 {{nearbyCount}} 个记忆点</text>
+    <text class="nearby-arrow">›</text>
+  </view>
+
+  <!-- 底部预览卡片 -->
+  <view class="preview-card {{showPreview ? 'show' : ''}}" wx:if="{{selectedPlace}}">
+    <view class="preview-close" bindtap="closePreview">×</view>
+    <view class="preview-content" bindtap="goToPlace">
+      <view class="preview-header">
+        <view class="preview-title-row">
+          <text class="preview-name">{{selectedPlace.name}}</text>
+          <view class="preview-badge" wx:if="{{selectedPlace.is_official}}">官方</view>
+        </view>
+        <text class="preview-desc">{{selectedPlace.description || '暂无描述'}}</text>
+        <view class="preview-meta">
+          <text class="preview-count">📷 {{selectedPlace.photo_count}} 张照片</text>
+          <text class="preview-distance" wx:if="{{selectedPlace.distance}}">📍 {{selectedPlace.distance_text}}</text>
+        </view>
+      </view>
+      <scroll-view class="preview-photos" scroll-x>
+        <view class="preview-photo-item" wx:for="{{selectedPlace.photos}}" wx:key="id">
+          <image src="{{item.thumbnail_url}}" mode="aspectFill" class="preview-photo" />
+        </view>
+        <view class="preview-photo-more" wx:if="{{selectedPlace.photo_count > 5}}">
+          <text>查看更多</text>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="preview-action">
+      <view class="btn-primary preview-go-btn" bindtap="goToPlace">
+        {{selectedPlace.is_nearby ? '进入记忆点' : '导航前往'}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索面板 -->
+  <view class="search-panel {{showSearch ? 'show' : ''}}">
+    <view class="search-panel-header">
+      <input
+        class="search-input"
+        placeholder="输入城市或景点名称"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        focus="{{showSearch}}"
+        confirm-type="search"
+        bindconfirm="doSearch"
+      />
+      <text class="search-cancel" bindtap="closeSearch">取消</text>
+    </view>
+    <scroll-view class="search-results" scroll-y>
+      <view
+        class="search-result-item"
+        wx:for="{{searchResults}}"
+        wx:key="id"
+        bindtap="onSelectSearchResult"
+        data-item="{{item}}"
+      >
+        <view class="result-name">{{item.name}}</view>
+        <view class="result-addr">{{item.address}}</view>
+      </view>
+      <view class="empty-state" wx:if="{{searchResults.length === 0 && searchKeyword}}">
+        <text class="empty-text">未找到相关地点</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 成就解锁提示 -->
+  <view class="achievement-toast {{showAchievement ? 'show' : ''}}">
+    <text class="achievement-icon">🏆</text>
+    <view class="achievement-info">
+      <text class="achievement-title">{{achievementTitle}}</text>
+      <text class="achievement-desc">{{achievementDesc}}</text>
+    </view>
+  </view>
+</view>

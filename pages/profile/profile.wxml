@@ -1,0 +1,102 @@
+<view class="profile-page">
+  <!-- 用户头部 -->
+  <view class="profile-header">
+    <view class="header-bg-gradient"></view>
+    <view class="profile-card">
+      <view class="user-main" wx:if="{{userInfo}}">
+        <image class="user-avatar-large" src="{{userInfo.avatar_url || '/images/tab-profile.png'}}" />
+        <view class="user-detail">
+          <text class="user-nickname">{{userInfo.nickname || '时空旅行者'}}</text>
+          <view class="user-level">
+            <text class="level-badge">Lv.{{userInfo.level || 1}}</text>
+            <text class="level-title">{{levelTitle}}</text>
+          </view>
+        </view>
+        <view class="vip-badge" wx:if="{{userInfo.is_vip}}">
+          <text>VIP</text>
+        </view>
+      </view>
+      <view class="login-prompt" wx:else bindtap="doLogin">
+        <image class="user-avatar-large" src="/images/tab-profile.png" />
+        <text class="login-text">点击登录</text>
+      </view>
+
+      <!-- 用户数据 -->
+      <view class="user-stats">
+        <view class="stat-block">
+          <text class="stat-num-large">{{stats.photo_count || 0}}</text>
+          <text class="stat-label-small">投递</text>
+        </view>
+        <view class="stat-block">
+          <text class="stat-num-large">{{stats.place_count || 0}}</text>
+          <text class="stat-label-small">足迹</text>
+        </view>
+        <view class="stat-block">
+          <text class="stat-num-large">{{stats.like_received || 0}}</text>
+          <text class="stat-label-small">获赞</text>
+        </view>
+        <view class="stat-block">
+          <text class="stat-num-large">{{stats.achievement_count || 0}}</text>
+          <text class="stat-label-small">成就</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 成就展示 -->
+  <view class="section-card">
+    <view class="section-header">
+      <text class="section-title">探索成就</text>
+      <text class="section-more" bindtap="viewAllAchievements">查看全部 ›</text>
+    </view>
+    <scroll-view class="achievement-scroll" scroll-x>
+      <view
+        class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}"
+        wx:for="{{achievements}}"
+        wx:key="id"
+      >
+        <text class="achievement-emoji">{{item.icon}}</text>
+        <text class="achievement-name">{{item.name}}</text>
+        <text class="achievement-progress" wx:if="{{!item.unlocked}}">{{item.progress}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="section-card">
+    <view class="menu-item" bindtap="goMyPhotos">
+      <text class="menu-icon">📷</text>
+      <text class="menu-text">我的投递</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goMyFavorites">
+      <text class="menu-icon">❤️</text>
+      <text class="menu-text">我的收藏</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goFootprint">
+      <text class="menu-icon">👣</text>
+      <text class="menu-text">足迹地图</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goVip">
+      <text class="menu-icon">👑</text>
+      <text class="menu-text">高级会员</text>
+      <view class="menu-tag">享更多特权</view>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="menu-item" bindtap="goSettings">
+      <text class="menu-icon">⚙️</text>
+      <text class="menu-text">设置</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goAbout">
+      <text class="menu-icon">ℹ️</text>
+      <text class="menu-text">关于时空记忆胶囊</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+</view>

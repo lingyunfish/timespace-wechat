@@ -1,0 +1,123 @@
+.publish-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+}
+
+.section {
+  background: #fff;
+  margin-bottom: 16rpx;
+  padding: 30rpx;
+}
+.section-title {
+  font-size: 30rpx; font-weight: 600;
+  color: #1a1a2e; margin-bottom: 20rpx;
+}
+
+/* 照片选择 */
+.picked-list {
+  display: flex; flex-wrap: wrap; gap: 12rpx;
+}
+.picked-item {
+  width: 200rpx; height: 200rpx;
+  border-radius: 12rpx; overflow: hidden;
+  position: relative;
+}
+.picked-photo {
+  width: 100%; height: 100%;
+}
+.picked-remove {
+  position: absolute; top: 4rpx; right: 4rpx;
+  width: 40rpx; height: 40rpx;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff; border-radius: 50%;
+  text-align: center; line-height: 40rpx;
+  font-size: 28rpx;
+}
+.picker-add {
+  width: 200rpx; height: 200rpx;
+  border: 2rpx dashed #ccc;
+  border-radius: 12rpx;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+}
+.picker-add-icon {
+  font-size: 56rpx; color: #ccc; line-height: 1;
+}
+.picker-add-text {
+  font-size: 22rpx; color: #999; margin-top: 8rpx;
+}
+.photo-tip {
+  font-size: 22rpx; color: #ccc; margin-top: 16rpx;
+}
+
+/* 描述 */
+.desc-input {
+  width: 100%;
+  min-height: 160rpx;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+.desc-count {
+  text-align: right; display: block;
+  font-size: 22rpx; color: #ccc; margin-top: 8rpx;
+}
+
+/* 位置 */
+.location-section { }
+.location-card {
+  display: flex;
+  background: #f8f8fc;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+.location-info {
+  flex: 1; padding: 20rpx;
+}
+.location-lock {
+  display: flex; align-items: center; margin-bottom: 8rpx;
+}
+.lock-icon-small { font-size: 24rpx; margin-right: 6rpx; }
+.location-status {
+  font-size: 22rpx; color: #00b894; font-weight: 500;
+}
+.location-name {
+  font-size: 30rpx; font-weight: 600;
+  color: #1a1a2e; display: block; margin-bottom: 6rpx;
+}
+.location-coords {
+  font-size: 22rpx; color: #999;
+}
+.location-map {
+  width: 200rpx; height: 200rpx;
+}
+.mini-map {
+  width: 100%; height: 100%;
+}
+.location-warning {
+  display: flex; align-items: center;
+  padding: 16rpx 20rpx; margin-top: 16rpx;
+  background: #fff3cd; border-radius: 12rpx;
+  font-size: 24rpx; color: #856404;
+}
+.warning-icon { margin-right: 8rpx; }
+
+/* 发布按钮 */
+.publish-footer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 20rpx 40rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+.publish-submit-btn {
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: #fff; border: none;
+  border-radius: 50rpx;
+  padding: 24rpx; font-size: 32rpx; font-weight: 500;
+}
+.publish-submit-btn.disabled {
+  opacity: 0.5;
+}
+.publish-submit-btn::after { border: none; }

@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/place/place",
+    "pages/publish/publish",
+    "pages/profile/profile",
+    "pages/photo/photo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a1a2e",
+    "navigationBarTitleText": "时空记忆胶囊",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#6c5ce7",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "探索",
+        "iconPath": "images/tab-explore.png",
+        "selectedIconPath": "images/tab-explore-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于展示附近的记忆点和验证地理位置"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
