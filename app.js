@@ -1,9 +1,28 @@
+// 后端地址配置：根据小程序运行环境自动切换
+const ENV_CONFIG = {
+  //develop:  'http://localhost:8080',           // 开发版（开发者工具）
+  develop:  'http://111.230.66.135:8080',  // 开发版
+  trial:    'https://api-test.yourdomain.com', // 体验版
+  release:  'https://api.yourdomain.com'       // 正式版
+}
+
+function getBaseUrl() {
+  try {
+    const accountInfo = wx.getAccountInfoSync()
+    const envVersion = accountInfo.miniProgram.envVersion // develop / trial / release
+    return ENV_CONFIG.develop
+    //return ENV_CONFIG[envVersion] || ENV_CONFIG.develop
+  } catch (e) {
+    return ENV_CONFIG.develop
+  }
+}
+
 App({
   globalData: {
     userInfo: null,
     token: '',
     location: null,
-    baseUrl: 'http://localhost:8080'
+    baseUrl: getBaseUrl()
   },
 
   onLaunch() {
@@ -70,6 +89,7 @@ App({
 
   request(url, options = {}) {
     const { baseUrl, token } = this.globalData
+    console.log('[API]', options.method || 'GET', baseUrl + url, options.data || '')
     return new Promise((resolve, reject) => {
       wx.request({
         url: baseUrl + url,
